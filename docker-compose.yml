@@ -1,0 +1,45 @@
+version: '3'
+services:
+  pc:
+    build: ../water-drop-pc
+    platform: linux/amd64
+    container_name: 'pc'
+    image: 'crpi-yhatmqd5rly143h5.ap-southeast-1.personal.cr.aliyuncs.com/one-react_nestjs/pc:v1'
+    ports:
+      - '4000:80'
+    volumes:
+      - './nginx:/etc/nginx/conf.d'
+    depends_on:
+      - server
+  mobile:
+    build: ../water-drop-mobile
+    platform: linux/amd64
+    container_name: 'mobile'
+    image: 'crpi-yhatmqd5rly143h5.ap-southeast-1.personal.cr.aliyuncs.com/one-react_nestjs/mobile:v1'
+    ports:
+      - '3000:80'
+    volumes:
+      - './nginx:/etc/nginx/conf.d'
+    depends_on:
+      - server
+  server:
+    build: ../drop-server (Nestjs)
+    platform: linux/amd64
+    container_name: 'server'
+    image: 'crpi-yhatmqd5rly143h5.ap-southeast-1.personal.cr.aliyuncs.com/one-react_nestjs/server:v1'
+    # 下面的3000是nestjs裡面Nestjs專案裡Docker所設置的EXPOSE 3000
+    ports:
+      - '3333:3000'
+    volumes:
+      - './server:/etc/config'
+    depends_on:
+      - mysqlserver
+  mysqlserver:
+    container_name: 'mysqlserver'
+    platform: linux/amd64
+    image: 'mysql:8.0.33'
+    environment:
+      - 'MYSQL_ROOT_PASSWORD=123456'
+      - 'MYSQL_DATABASE=water-drop'
+    volumes:
+      - './db:/docker-entrypoint-initdb.d'
