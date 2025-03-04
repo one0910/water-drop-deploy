@@ -27,7 +27,7 @@ services:
     platform: linux/amd64
     container_name: 'server'
     image: 'crpi-yhatmqd5rly143h5.ap-southeast-1.personal.cr.aliyuncs.com/one-react_nestjs/server:v1'
-    # 下面的3000是nestjs裡面Nestjs專案裡Docker所設置的EXPOSE 3000
+    # 下面的3000是nestjs裡面Nestjs專案裡app.listen(process.env.PORT ?? 3000); 的3000端口，它會實際的對去應用程式端監聽的端口
     ports:
       - '3333:3000'
     volumes:
