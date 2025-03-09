@@ -1,73 +1,44 @@
-# 项目部署
+# Intruction
+這是一個自製的線上預約的教育平台，在這個平台上商家可以建、管理課程，而用戶可以進行購買並學習課程，該專案是透過 React 18 + AntD +TS + NestJS + GraphQL + TypeOrm + Mysql 等技術完全的一個全端平台，包含前台及中後端。而此項目內容並非原始碼，可是可藉由docker-compose建立docker image，進而直接使用該教育平台
 
-> 具体步骤如下：
+## Demo Site
+#### Frontend Stage:
+![圖片](https://github.com/user-attachments/assets/b2164bf8-72b7-4acc-b905-5c0b1891dd35)
 
-## 准备工作
-- 安装 `docker`：https://help.aliyun.com/document_detail/51853.html?spm=5176.12818093_-1363046575.help.dexternal.3be916d03sJH3w
-- 安装 `docker-compose`： `curl -L "https://water-drop-assets.oss-cn-hangzhou.aliyuncs.com/soft/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose`
-- 文档：https://www.runoob.com/docker/docker-compose.html
+#### Dashboard Site:
+![圖片](https://github.com/user-attachments/assets/7b2e0d68-7504-4530-a6e6-edefa5ab1100)
 
-## 第一步：下载代码
-- clone 以下代码：`water-drop-deploy water-drop-server water-drop-mobile water-drop-pc`
+### 準備工作
+- 安装 `docker` https://www.docker.com/get-started/
 
-## 第二步：构建镜像
-- 在本地执行（Mac 环境）
-- 进入 `water-drop-deploy` 目录
-- 执行 `docker-compose build`
+### 第一步：下載代碼
+> git clone https://github.com/one0910/water-drop-deploy.git
 
-## 第三步：提交镜像到阿里云镜像仓库
-- 在本地执行（Mac 环境）
-- 登录镜像仓库：`docker login --username=123456li********@163.com registry.cn-beijing.aliyuncs.com`
-- 提交镜像：`docker-compose push`
+### 第二步：下載代碼後，進入該專案資料夾 water-drop-deploy
 
-## 第四步：到 ECS 服务器上登录镜像仓库服务
-- 在服务器 ECS 执行（Linux 环境）
-- 登录镜像仓库：`docker login --username=123456lichengbei@163.com registry.cn-beijing.aliyuncs.com`
+### 第三步：登入阿里雲鏡像
+- 在本機端執行
+> docker login --username=one****@gmail.com crpi-yhatmqd5rly143h5.ap-southeast-1.personal.cr.aliyuncs.com
+- `Login Password `: abc12345
 
-## 第五步：到 ECS 服务器上克隆 water-drop-deploy 项目
-- 下载 `water-drop-deploy` 代码
-- 执行 `docker-compose pull`
+### 第四步：登入成功後下載docker鏡像
+- 在本機端執行
+> docker-compose pull
 
-## 第六步：在 ECS 服务器上启动镜像
-- 在 `water-drop-deploy` 执行 `docker-compose up`
+### 第五步：下載完docker鏡像後，執行docker鏡像啟動
+- 在本機端執行
+> docker-compose up
 
-## 第七步：配置 nginx 反向代理服务
-- ECS 服务器上装一个 nginx，同时配置代理
-```
-server {
-    listen 443 ssl; // 80
-    server_name water-drop.yondu.vip;
+### 第六步：鏡像啟動後，確認對應的容器是否啟用
+- 分別有4個服務會在 `water-drop-deploy` 底下
+- `mobile`、`pc`、`server`、`mysqlserver`
+![圖片](https://github.com/user-attachments/assets/ce058186-7592-4a28-ba44-7032521f41bc)
 
-    access_log  /opt/log/mooc/access.log;
-    
-    error_log   /opt/log/mooc/error.log;
-
-    ssl_certificate cert/10101144_water-drop.yondu.vip.pem;
-    ssl_certificate_key cert/10101144_water-drop.yondu.vip.key;
-  
-    ssl_session_timeout 5m;
-    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
-    ssl_protocols TLSv1.1 TLSv1.2;
-    ssl_prefer_server_ciphers on;
- 
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
-}
-```
-
-## 第八步：配置域名
-- 阿里云域名配置：https://dc.console.aliyun.com/#/domain-list/all
-- 配置域名：`water-drop.yondu.vip`
+### 第七步：開啟服務
+- 請分別開啟下面網頁，確認是否正常
+- http://localhost:3000/
+- http://localhost:4000/
 
 ## 其他基础命令
-- 删除所有镜像：`docker rmi -f $(docker images -aq)`
-- 删除 none 镜像：`docker rmi $(docker images -f "dangling=true" -q) -f`
-- 进程按照内存排序：`ps aux --sort=-%mem`
-- 进入容器命令行：`docker exec -it mysqlserver bash`
-- 证书：https://yundun.console.aliyun.com/?spm=5176.8351553.top-nav.4.775f19916vAtGb&p=cas#/overview/cn-hangzhou
+- 删除所有鏡像：`docker rmi -f $(docker images -aq)`
+- 關閉所有鏡像服務：`docker-compose down`
