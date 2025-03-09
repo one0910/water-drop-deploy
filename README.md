@@ -1,5 +1,7 @@
 # Intruction
-這是一個自製的線上預約的教育平台，在這個平台上商家可以建、管理課程，而用戶可以進行購買並學習課程，該專案是透過 React 18 + AntD +TS + NestJS + GraphQL + TypeOrm + Mysql 等技術完全的一個全端平台，包含前台及中後端。而此項目內容並非原始碼，可是可藉由docker-compose建立docker image，進而直接使用該教育平台
+This is a self-developed online education platform for booking and scheduling classes. On this platform, businesses can create and manage courses, while users can purchase and learn from them. The project is a fully functional full-stack application built with React 18 + Ant Design + TypeScript + NestJS + GraphQL + TypeORM + MySQL, including both frontend and backend systems.
+
+Note: The source code is not included in this repository. However, you can directly use the platform by building Docker images with docker-compose.
 
 ## Demo Site
 #### Frontend Stage:
@@ -8,37 +10,36 @@
 #### Dashboard Site:
 ![圖片](https://github.com/user-attachments/assets/7b2e0d68-7504-4530-a6e6-edefa5ab1100)
 
-### 準備工作
-- 安装 `docker` https://www.docker.com/get-started/
+### Prerequisites
+- Install  `docker` https://www.docker.com/get-started/
 
-### 第一步：下載代碼
+### Step 1: Clone the repository
 > git clone https://github.com/one0910/water-drop-deploy.git
 
-### 第二步：下載代碼後，進入該專案資料夾 water-drop-deploy
+### Step 2: Enter the project folder
+> cd cd water-drop-deploy
 
-### 第三步：登入阿里雲鏡像
-- 在本機端執行
+### Step 3: Log in to Alibaba Cloud container registry
+- Run the following command on your local machine:
 > docker login --username=one****@gmail.com crpi-yhatmqd5rly143h5.ap-southeast-1.personal.cr.aliyuncs.com
 - `Login Password `: abc12345
 
-### 第四步：登入成功後下載docker鏡像
-- 在本機端執行
+### Step 4: Pull Docker images
 > docker-compose pull
 
-### 第五步：下載完docker鏡像後，執行docker鏡像啟動
-- 在本機端執行
+### Step 5: Start Docker containers
 > docker-compose up
 
-### 第六步：鏡像啟動後，確認對應的容器是否啟用
-- 分別有4個服務會在 `water-drop-deploy` 底下
+### Step 6: Verify containers
+- Ensure that the following four services are running under the `water-drop-deploy` project:
 - `mobile`、`pc`、`server`、`mysqlserver`
 ![圖片](https://github.com/user-attachments/assets/ce058186-7592-4a28-ba44-7032521f41bc)
 
-### 第七步：開啟服務
-- 請分別開啟下面網頁，確認是否正常
+### Step 7: Open the service in your browser
+- Visit the following URLs to verify everything is working:
 - http://localhost:3000/
 - http://localhost:4000/
 
-## 其他基础命令
-- 删除所有鏡像：`docker rmi -f $(docker images -aq)`
-- 關閉所有鏡像服務：`docker-compose down`
+## Other Useful Commands
+- Remove all Docker images：`docker rmi -f $(docker images -aq)`
+- Stop all services：`docker-compose down`
