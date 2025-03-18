@@ -21,7 +21,7 @@ Note: The source code is not included in this repository. However, you can direc
 
 ### Step 3: Log in to Alibaba Cloud container registry
 - Run the following command on your local machine:
-> docker login --username=one****@gmail.com crpi-yhatmqd5rly143h5.ap-southeast-1.personal.cr.aliyuncs.com
+> docker login --username=one0910@gmail.com crpi-yhatmqd5rly143h5.ap-southeast-1.personal.cr.aliyuncs.com
 - `Login Password `: abc12345
 
 ### Step 4: Pull Docker images
